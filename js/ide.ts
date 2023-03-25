@@ -181,13 +181,15 @@ class IDE {
       this.opened = true;
     }
     close(title_prefix = "") {
-      if (!this.opened) return;
-      clearInterval(this.interval);
-      document.title = `${title_prefix}${this._initialTitle}`;
+      if (this !== undefined) {
+        if (!this.opened) return;
+        clearInterval(this.interval);
+        document.title = `${title_prefix}${this._initialTitle}`;
+        delete this.onAbort;
+        this.opened = false;
+      }
       $("#loading-dialog").removeClass("is-active");
       $(".wait-info ul li").remove();
-      delete this.onAbort;
-      this.opened = false;
     }
     addInfo(txt, abortCallback) {
       $("#aborter").remove(); // remove previously added abort button, which cannot be used anymore.
@@ -258,7 +260,10 @@ class IDE {
 
     if (sync.enabled) {
       $("#load-dialog .osm").show();
-      if (sync.authenticated()) $("#logout").show();
+      if (sync.authenticated()) {
+        $("#logout").show();
+        $("#login").hide();
+      }
     }
   }
 
@@ -1403,11 +1408,21 @@ class IDE {
   onSaveClose() {
     $("#save-dialog").removeClass("is-active");
   }
+  onLoginClick() {
+    sync.load(() => {
+      $("#logout").show();
+      $("#login").hide();
+      return;
+    });
+    $("#login").show();
+    $("#logout").hide();
+  }
   onLogoutClick() {
     if (!window.confirm("Logout?")) return;
     sync.logout();
     $("#load-dialog .panel.osm-queries .panel-block").remove();
     $("#logout").hide();
+    $("#login").show();
   }
   onRunClick() {
     this.update_map();

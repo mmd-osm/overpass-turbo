@@ -1,10 +1,7 @@
-import osmAuth from "osm-auth";
+import {osmAuth} from "osm-auth";
 import configs from "./configs";
 
-const enabled =
-  configs.osmAuth &&
-  configs.osmAuth.oauth_consumer_key &&
-  configs.osmAuth.oauth_secret;
+const enabled = configs.osmAuth && configs.osmAuth.client_id;
 
 let auth;
 if (enabled) auth = osmAuth(configs.osmAuth);

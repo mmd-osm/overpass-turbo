@@ -12,6 +12,13 @@ import {htmlentities} from "./misc";
 import styleparser from "./jsmapcss";
 import {featurePopupContent} from "./popup";
 
+import {osmAuth} from "osm-auth";
+
+const enabled = configs.osmAuth && configs.osmAuth.client_id;
+
+let auth;
+if (enabled) auth = osmAuth(configs.osmAuth);
+
 export type QueryLang = "xml" | "OverpassQL";
 
 class Overpass {
@@ -717,10 +724,25 @@ class Overpass {
       onSuccessCb.apply(this, cache[query]);
     } else {
       overpass.ajax_request_start = Date.now();
+
+      if (!auth.authenticated()) {
+        overpass.fire(
+          "onAjaxError",
+          "Please log in to osm.org first using the Login button before running a query\n\n\n"
+        );
+        // closing wait spinner
+        overpass.fire("onDone");
+        return;
+      }
+
       overpass.ajax_request = $.ajax(`${server}interpreter`, {
         type: "POST",
         data: {data: query},
         success: onSuccessCb,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Bearer ${auth.getToken()}`
+        },
         error(jqXHR, textStatus) {
           if (textStatus == "abort") return; // ignore aborted queries.
           overpass.fire("onProgress", "error during ajax call");

@@ -1,16 +1,10 @@
 export default {
-  appname: "overpass-turbo",
+  appname: "overpass-turbo-dev-mmd",
   // used for localStorage and openstreetmap.org/api/0.6/user/preferences
-  settingNamespace: "overpass-ide",
-  defaultServer: "//overpass-api.de/api/",
+  settingNamespace: "overpass-ide-dev-mmd",
+  defaultServer: "https://overpass-api.de/api/",
   // https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances
-  suggestedServers: [
-    "//overpass-api.de/api/",
-    "https://overpass-api.de/api/",
-    "https://maps.mail.ru/osm/tools/overpass/api/",
-    "https://overpass.openstreetmap.ru/api/",
-    "https://overpass.kumi.systems/api/"
-  ],
+  suggestedServers: ["https://overpass-api.de/api/"],
   defaultTiles: "//tile.openstreetmap.org/{z}/{x}/{y}.png",
   // https://wiki.osmfoundation.org/wiki/Licence/Attribution_Guidelines
   // > Attribution must be to "OpenStreetMap".
@@ -36,5 +30,13 @@ export default {
   // api key for osmnames geocoder, go to http://osmnames.org/api/ to get one if you run your own overpass instance
   osmnamesApiKey: "gtXyh2mBSaN5zWqqqQRh",
   // osmAuth configuration object (used for syncing saved queries). expects an osm-auth config object (min. the oauth_consumer_key and oauth_secret must be given), see https://github.com/osmlab/osm-auth#getting-keys
-  osmAuth: null
+  osmAuth: {
+    client_id: "d1ZcdXUbL1Aon39t6c757NDRVj_QXtOCBysKT4DyTmk",
+    client_secret: "",
+    redirect_uri: `${
+      window.location.origin + window.location.pathname
+    }land.html`,
+    scope: "read_prefs",
+    auto: true // show a login form if the user is not authenticated and you try to do a call
+  }
 };

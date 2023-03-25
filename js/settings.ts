@@ -123,6 +123,30 @@ const examples = {
     overpass:
       "/*\nThis is an example Overpass query.\nTry it out by pressing the Run button above!\nYou can find more examples with the Load tool.\n*/\nnode\n  [amenity=drinking_water]\n  ({{bbox}});\nout;"
   },
+  "Suspicious tracking parameters": {
+    overpass:
+      '[timeout:1200];nwr[~"."~"(fbclid|gclid|campaign_ref|mc_id|utm_source|utm_medium|utm_term|utm_content|utm_campaign|utm_id|gclsrc|dclid|wt.tsrc|WT.tsrc|zanpid|yclid|utm_campain|trkCampaign|mkt_tok|sc_campaign|sc_channel|sc_content|sc_medium|sc_outcome|sc_geo|sc_country|mbid|cmpid|campaign_id|Campaign|fb_action_ids|fb_action_types|fb_ref|fb_source|gs_l|_hsenc|igshid|CampIDMin|CampIDMaj|campaign|Campaign|campaignid|campaignId|adid|adgroupid|refr|referrer|cm_mmc|lw_cmp|CLID|ReferralSource|SourceID|trkid|adjust_creative|partner_slug|y_source|oppartnerid|padid|otppartnerid|ref_device_id|utm_kxconfid|SEO_id|originalReferrer|spMailingID|hsCtaTracking)="];out meta;'
+  },
+  "Restaurants, bars, pubs, cafe starting with letter P having a nearby phone":
+    {
+      overpass:
+        '[out:json][timeout:120];\nnode[amenity = restaurant | bar | pub | cafe]["name"~"^P"]->.rest;\nnwr[amenity=telephone]->.phone;\nnode.rest(around.phone:100);\nout body;'
+    },
+  "Emojis in Tags": {
+    overpass:
+      '[timeout:300];\nnwr[~"."~"[\\\\x{0001F600}-\\\\x{0001F64F}]"];\nout tags;'
+  },
+  "Large tag cardinality": {
+    overpass:
+      'way[building][source][highway][name]["addr:housenumber"]["addr:street"]["addr:city"]["addr:postcode"];out meta;'
+  },
+  "Large bbox k/v attic query": {
+    overpass:
+      '[bbox:{{bbox}}];\n    retro("2020-12-20T00:00:00Z") {\n      way[highway=residential][lit=yes];\n      out geom meta;\n    }'
+  },
+  "Global xmas features in PBF format": {
+    overpass: '[out:pbf];nwr["xmas:feature"];out qt center;'
+  },
   "Cycle Network": {
     overpass:
       "/*\nThis shows the cycleway and cycleroute network.\n*/\n\n[out:json];\n\n(\n  // get cycle route relations\n  relation[route=bicycle]({{bbox}})->.cr;\n  // get cycleways\n  way[highway=cycleway]({{bbox}});\n  way[highway=path][bicycle=designated]({{bbox}});\n);\n\nout body;\n>;\nout skel qt;"

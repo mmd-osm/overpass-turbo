@@ -18,6 +18,8 @@
     "nav.help_tt": "Hilfe, Infos und Lizenzen",
     "nav.logout": "Ausloggen",
     "nav.logout_tt": "Vom aktuell synchronisierten OSM Account ausloggen.",
+    "nav.login": "Login",
+    "nav.login_tt": "Login",
     "tabs.map": "Karte",
     "tabs.map_tt": "Kartenansicht",
     "tabs.data": "Daten",

@@ -19,6 +19,8 @@
 
   "nav.logout": "Logout",
   "nav.logout_tt": "logout from currently synced osm account",
+  "nav.login": "Login",
+  "nav.login_tt": "Login",
 
   "tabs.map": "Map",
   "tabs.map_tt": "map view",
