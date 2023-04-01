@@ -2,9 +2,12 @@ export default {
   appname: "overpass-turbo-dev-mmd",
   // used for localStorage and openstreetmap.org/api/0.6/user/preferences
   settingNamespace: "overpass-ide-dev-mmd",
-  defaultServer: "https://overpass-api.de/api/",
+  defaultServer: "https://dev.overpass-api.de/api_mmd_oauth2/",
   // https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances
-  suggestedServers: ["https://overpass-api.de/api/"],
+  suggestedServers: [
+    "https://dev.overpass-api.de/api_mmd_oauth2/",
+    "https://overpass-api.de/api/"
+  ],
   defaultTiles: "//tile.openstreetmap.org/{z}/{x}/{y}.png",
   // https://wiki.osmfoundation.org/wiki/Licence/Attribution_Guidelines
   // > Attribution must be to "OpenStreetMap".
