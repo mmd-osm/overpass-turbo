@@ -39,7 +39,7 @@ export default {
     redirect_uri: `${
       window.location.origin + window.location.pathname
     }land.html`,
-    scope: "read_prefs",
+    scope: "read_prefs write_prefs",
     auto: true // show a login form if the user is not authenticated and you try to do a call
   }
 };

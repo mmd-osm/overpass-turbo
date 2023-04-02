@@ -301,7 +301,7 @@ body .ui-tooltip {
 }
 
 #data_stats {
-  z-index: 5;
+  z-index: 500;
   display: block;
   position: absolute;
   bottom: 0;

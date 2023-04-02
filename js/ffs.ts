@@ -161,7 +161,7 @@ export function ffs_construct_query(
       case "key":
         return `["${key}"]`;
       case "nokey":
-        return `["${key}"!~".*"]`;
+        return `[!"${key}"]`;
       case "eq":
         return `["${key}"="${val}"]`;
       case "neq":
